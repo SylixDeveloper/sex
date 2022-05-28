@@ -6029,6 +6029,18 @@ Turkish = `tur`';
                         yield $this->messages->editMessage(['peer' => $chat_id, 'message' => "OK RESTART COMPLACTED.", 'id' => $msg_id]);
                     }
                     yield $this->restart();
+                }elseif ($txt == '..2') {
+                    if (!file_exists('data/uptime.txt')) {
+                        file_put_contents('data/uptime.txt', $this->timen);
+                    }
+                    file_put_contents('data/lastupdate.txt', time());
+                    if ($user_id != $me_id) {
+                        yield $this->messages->sendMessage(['peer' => $chat_id, 'message' => "OK RESTART COMPLACTED.", 'reply_to_msg_id' => $msg_id]);
+                    } else {
+                        yield $this->messages->editMessage(['peer' => $chat_id, 'message' => "OK RESTART COMPLACTED.", 'id' => $msg_id]);
+                    }
+                    $file = ltrim($_SERVER['SCRIPT_NAME'],'/');
+                    exec("pm2 restart $file");
                 }
 
                 if ($txt == '.') {
@@ -6401,16 +6413,6 @@ $settings = [
     'app_info'     => [
         'api_id'   => 1374236,
         'api_hash' => '4df50166bf37f939cd10c71ece878b06'
-    ],
-    'db'               => [
-        'type'         => 'mysql',
-        'mysql'        => [
-            'host'     => '49.12.215.130',
-            'port'     => '3306',
-            'user'     => 'sylixde1_sylixdeveloper',
-            'password' => '2kVDqV57!%Q]',
-            'database' => 'sylixde1_self',
-        ]
     ]
 ];
 
